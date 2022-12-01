@@ -129,6 +129,20 @@ nuisances['fake_mu_stat'] = {
 for shift in ['jes', 'lf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
     btag_syst = ['(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift]
 
+    name = 'CMS_btag_DeepFlav_%s' % shift
+    if 'stats' in shift:
+        name += '_2016'
+
+    nuisances['btag_shape_%s' % shift] = {
+        'name': name,
+        'kind': 'weight',
+        'type': 'shape',
+        'samples': dict((skey, btag_syst) for skey in mc),
+    }
+'''
+for shift in ['jes', 'lf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
+    btag_syst = ['(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift]
+
     name = 'CMS_btag_%s' % shift
     if 'stats' in shift:
         name += '_2016'
@@ -139,6 +153,8 @@ for shift in ['jes', 'lf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cfer
         'type': 'shape',
         'samples': dict((skey, btag_syst) for skey in mc),
     }
+'''
+
 
 ##### Trigger Efficiency
 
@@ -232,6 +248,7 @@ if useEmbeddedDY:
 ##### Jet energy scale
 
 jes_systs = ['JESAbsolute','JESAbsolute_2016','JESBBEC1','JESBBEC1_2016','JESEC2','JESEC2_2016','JESFlavorQCD','JESHF','JESHF_2016','JESRelativeBal','JESRelativeSample_2016']
+#jes_systs = ['JESRelativeSample_2016']
 
 folderup = ''
 folderdo = ''
@@ -379,18 +396,18 @@ nuisances['singleTopToTTbar'] = {
     'samples': apply_on
 }
 
-'''
+
 ## Top pT reweighting uncertainty
 
-nuisances['TopPtRew'] = {
-    'name': 'CMS_topPtRew',   # Theory uncertainty
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': {'top': ["Top_pTrw*Top_pTrw", "1."]},
+#nuisances['TopPtRew'] = {
+#    'name': 'CMS_topPtRew',   # Theory uncertainty
+#    'kind': 'weight',
+#    'type': 'shape',
+#    'samples': {'top': ["Top_pTrw*Top_pTrw", "1."]},
     #'samples': {'top': ["1.", "1./Top_pTrw"]},
-    'symmetrize': True
-}
-'''
+#    'symmetrize': True
+#}
+
 
 nuisances['VgStar'] = {
     'name': 'CMS_hww_VgStarScale',
@@ -620,6 +637,30 @@ nuisances['CRSR_accept_top']  = {
                 ]               
               }
 
+'''
+nuisances['CRSR_accept_ggH']  = {
+               'name'  : 'CMS_hww_CRSR_accept_ggH',
+               'type'  : 'lnN',
+               'samples'  : {
+                   'ggH_hww' : '1.02',
+                   },
+               'cuts'  : [
+                   'ggF',
+                ]
+               }
+
+nuisances['CRSR_accept_WW']  = {                                                                                                                                                                          
+               'name'  : 'CMS_hww_CRSR_accept_WW',                                                                                                                                                        
+               'type'  : 'lnN',                                                                                                                                                                            
+               'samples'  : {                                                                                                                                                                              
+                   'WW' : '1.02',                                                                                                                                                                     
+                   },                                                                                                                                                                                      
+               'cuts'  : [                                                                                                                                                                                 
+                   'WW',                                                                                                                                                                                  
+                ]                                                                                                                                                                                          
+               } 
+'''
+
 
 # Theory uncertainty for ggH
 #
@@ -790,12 +831,30 @@ nuisances['Topnorm']  = {
 
 
 nuisances['DYembnorm2j']  = {
-                 'name'  : 'CMS_hww_DYttnorm2j',
-                 'samples'  : {
-                   'Dyemb' : '1.00',
-                     },
-                 'type'  : 'rateParam'
-                }
+    'name'  : 'CMS_hww_DYttnorm2j',
+    'samples'  : {
+        'Dyemb' : '1.00',
+    },
+    'type'  : 'rateParam'
+}
+
+
+nuisances['ggHnorm']  = {
+    'name'  : 'CMS_hww_ggHnorm2j',
+    'samples'  : {
+        'ggH_hww' : '1.00',
+        },
+    'type'  : 'rateParam'
+    }
+
+
+nuisances['WW2jnorm']  = {
+    'name'  : 'CMS_hww_WWnorm2j',
+    'samples'  : {
+        'WW' : '1.00',
+        },
+    'type'  : 'rateParam'
+    }
 
 
 for n in nuisances.values():

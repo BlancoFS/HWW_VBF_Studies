@@ -23,6 +23,65 @@ variables['BDT_VBF_2'] = { 'name'  : 'BDTG4D3',
                            'xaxis' : 'BDT VBF',
                            'fold'  : 3}
 
+#variables['BDT_VBF_015'] = { 'name'  : 'BDTG4D3',
+#                             'range' : (8, 0.15, 1.),
+#                             'xaxis' : 'BDT VBF',
+#                             'fold'  : 0}
+
+#variables['BDT_VBF_05'] = { 'name'  : 'BDTG4D3',
+#                            'range' : (5, 0.5, 1.),
+#                            'xaxis' : 'BDT VBF',
+#                            'fold'  : 0}
+
+
+
+'''
+variables['BDT_VBF_bin'] = { 'name'  : 'BDTG4D3',
+                             'range' : ([0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 1.0],),
+                             'xaxis' : 'BDT VBF',
+                             'fold'  : 0}
+
+
+variables['BDT_VBF_bin2'] = { 'name'  : 'BDTG4D3',
+                              'range' : ([0.65, 0.75, 0.85, 0.9, 0.95, 1.0],),
+                              'xaxis' : 'BDT VBF',
+                              'fold'  : 0}
+
+
+variables['BDT_VBF_test'] = { 'name'  : 'BDTG4D3',
+                              'range' : ([0.65, 0.7, 0.75, 0.825, 0.875, 0.925, 1.0],),
+                              'xaxis' : 'BDT VBF',
+                              'fold'  : 0}
+'''
+
+variables['D_VBF_QCD'] = { 'name'  : 'D_VBF_QCD',                                                                                                                                                                                            
+                           'range' : (30, 0., 1.),                                                                                                                                                                                           
+                           'xaxis' : 'D_VBF_QCD',                                                                                                                                                                                            
+                           'fold'  : 3}
+
+variables['D_VBF_VH'] = { 'name'  : 'D_VBF_VH',                                                                                                                                                                                              
+                          'range' : (30, 0., 1.),                                                                                                                                                                                           
+                          'xaxis' : 'D_VBF_VH',                                                                                                                                                                                             
+                          'fold'  : 3}                                                                                                                                                                                                       
+
+variables['D_VH_QCD'] = { 'name'  : 'D_VH_QCD',                                                                                                                                                                                              
+                          'range' : (30, 0., 1.),                                                                                                                                                                                            
+                          'xaxis' : 'D_VH_QCD',                                                                                                                                                                                              
+                          'fold'  : 3}   
+
+
+variables['D_VBF_DY'] = { 'name'  : 'D_DY',                                                                                                                                                                                                  
+                          'range' : (30, 0., 1.),                                                                                                                                                                                            
+                          'xaxis' : 'D_DY',                                                                                                                                                                                                  
+                          'fold'  : 3}
+
+'''
+
+variables['events'] = {   'name'  : '1',
+                          'range' : (1, 0, 2),
+                          'xaxis' : 'events',
+                          'fold'  : 3} 
+
 
 #
 # Centrality
@@ -44,7 +103,7 @@ variables['jet2_qgl'] = { 'name'  : 'Jet_qgl[1]',
                           'fold'  : 3}
 
 variables['detajj'] = {   'name'  : 'detajj',
-                          'range' : (20, 0., 4.),
+                          'range' : (20, 0., 5.),
                           #'range' : (10, 3., 4.),
                           'xaxis' : '|#Delta#eta_{jj}|',
                           'fold'  : 3}
@@ -80,8 +139,8 @@ variables['detall_01'] = { 'name'  : 'abs(Lepton_eta[0]-Lepton_eta[1])',
                           'xaxis' : '|#Delta#eta_{l1l2}|',
                           'fold'  : 0}
 
-variables['drjj'] = {     'name'  : 'sqrt(CleanJet_eta[0]*CleanJet_eta[1] + CleanJet_phi[0]*CleanJet_phi[1])',
-                          'range' : (20, 0., 5.),
+variables['drjj'] = {     'name'  : 'sqrt((CleanJet_eta[0]-CleanJet_eta[1])**2 + (CleanJet_phi[0]-CleanJet_phi[1])**2)',
+                          'range' : (20, 0., 8.),
                           #'range' : (10, 0., 5.),
                           'xaxis' : '#DeltaR_{jj}',
                          #'linesToAdd': ['.L $CMSSW_BASE/src/PlotsConfigurations/Configurations/WW/Full2016_v6/extended/drjj.C+'], #if want to use a script
@@ -105,6 +164,12 @@ variables['dphill'] = {   'name'  : 'abs(dphill)',
                           'range' : (20, 0., 3.2),   
                           #'range' : (10, 0., 3.2),
                           'xaxis' : '#Delta#phi_{ll}',
+                          'fold'  : 3}
+
+variables['dphijj'] = {   'name'  : 'CleanJet_phi[0] - CleanJet_phi[1]',
+                          'range' : (20, -3.2, 3.2),
+                          #'range' : (10, 0., 3.2),                                                                                                                                                        
+                          'xaxis' : '#Delta#phi_{jj}',
                           'fold'  : 3}
 
 variables['dphill_01'] = {   'name'  : 'abs(dphill)',
@@ -187,9 +252,9 @@ variables['jetphi3'] = {  'name'  : 'CleanJet_phi[2]',
 
 variables['GetjetDis'] = {  #'name'  : 'abs(CleanJet_eta[2]-(CleanJet_eta[0]+CleanJet_eta[1])/2)*(CleanJet_pt[2]>30)',
                           'name'  : 'abs(jetdis)',
-                          'range' : (10, 0.0, 4.0),
+                          'range' : (10, 0.0, 4.5),
                           'xaxis' : '|#eta^{*}| = |#eta_{3} - (#eta_{1} + #eta_{2})/2|',
-                          'fold'  : 3}
+                          'fold'  : 0}
 
 variables['jetpt1'] = {   'name'  : 'CleanJet_pt[0]*(CleanJet_pt[0]>30)',     
                           #'range' : (40, 30., 190.),
@@ -204,7 +269,7 @@ variables['jetpt1_0j'] = {'name'  : 'CleanJet_pt[0]*(CleanJet_pt[0]<30)',
 
 variables['mjj'] = {      'name'  : 'mjj',
                           #'range' : (25, 200., 400.),
-                          'range' : (30, 200., 4000.),
+                          'range' : (30, 0., 4000.),
                           'xaxis' : 'm_{jj} [GeV]',
                           'fold'  : 3}
 
@@ -212,6 +277,16 @@ variables['mjj_CR'] = {      'name'  : 'mjj',
                           'range' : (20, 0., 400.),
                           'xaxis' : 'm_{jj} [GeV]',
                           'fold'  : 3}
+
+variables['mjj_WW'] = {      'name'  : 'mjj',
+                             'range' : (10, 0., 200.),
+                             'xaxis' : 'm_{jj} [GeV]',
+                             'fold'  : 3}
+
+variables['mjj_GGH'] = {      'name'  : 'mjj',
+                              'range' : (10, 0., 300.),
+                              'xaxis' : 'm_{jj} [GeV]',
+                              'fold'  : 3}
 
 variables['mll'] = {      'name'  : 'mll',
                           'range' : (20, 10., 70.),
@@ -227,7 +302,7 @@ variables['mll10GeV'] = { 'name'  : 'mll',
                           #'range' : (20, 0., 200.),
                           'range' : (10, 0., 100.),
                           'xaxis' : 'm_{ll} [GeV]',
-                          'fold'  : 0}
+                          'fold'  : 3}
 
 variables['mpmet'] = {    'name'  : 'mpmet',      
                           'range' : (50, 0., 150.),  
@@ -251,6 +326,15 @@ variables['mth_DY'] = {      'name'  : 'mth',
                              'xaxis' : 'm_{T}^{H} [GeV]',
                              'fold'  : 3}
 
+variables['mth_WW'] = {      'name'  : 'mth',
+                             'range' : (12, 50., 200.),
+                             'xaxis' : 'm_{T}^{H} [GeV]',
+                             'fold'  : 3}
+
+variables['mth_GGH'] = {      'name'  : 'mth',
+                             'range' : (10, 60., 145.),
+                             'xaxis' : 'm_{T}^{H} [GeV]',
+                             'fold'  : 3}
 
 variables['njet'] = {     'name'  : 'Sum$(CleanJet_pt>30)',     
                           'range' : (5, 0, 5),   
@@ -316,7 +400,7 @@ variables['TkMET'] = {    'name'  : 'TkMET_pt',
                           'fold'  : 3}
 
 variables['ptlljjmet'] = { 'name'  : 'Lepton_pt[0] + Lepton_pt[1] + CleanJet_pt[0] + CleanJet_pt[1] + MET_pt',
-                          'range' : (16, 100., 700.),
+                          'range' : (12, 100., 700.),
                           'xaxis' : 'p_{T} leptons+jets+MET',
                           'fold'  : 3}
 
@@ -341,6 +425,9 @@ variables['ptjj'] = { 'name'  : '(CleanJet_pt[0] + CleanJet_pt[1])',
                       'fold'  : 3}
 
 '''
+
+'''
+
 variables['alphaj1'] = { 'name'  : 'alpha1',
                          'range' : (15, 0., 2.),
                          'xaxis' : '#alpha_{j1}',
@@ -356,20 +443,31 @@ variables['alphaj3'] = { 'name'  : 'alpha3',
                          'xaxis' : '#alpha_{j3}',
                          'fold'  : 2}
 
+
 variables['D_0-'] = { 'name'  : 'kd_vbf',
                          'range' : (20, 0., 1.),
                          'xaxis' : 'D_{0}^{-}',
                          'fold'  : 2}
 
+variables['D_0-_2'] = { 'name'  : 'kd_vbf',
+                        'range' : (20, 0.65, 1.),
+                        'xaxis' : 'D_{0}^{-}',
+                        'fold'  : 3}
+
 variables['D_alt_VBF'] = { 'name'  : 'D_alt',
-                         'range' : (20, 0., 1.),
+                           'range' : (20, 0., 1.),
                            'xaxis' : 'D_{alt}',
-                         'fold'  : 2}
+                           'fold'  : 0}
 
 variables['D_alt_qcd'] = { 'name'  : 'D_alt_QCD',
                          'range' : (20, 0., 1.),
                          'xaxis' : 'D_{alt} QCD',
                          'fold'  : 2}
+
+variables['MELA_fit'] = {      'name'  : 'D_alt',
+                               'range' : ([0.8, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1.],),
+                               'xaxis' : 'D_{alt}',
+                               'fold'  : 0}
 
 variables['D_int_VBF'] = { 'name'  : 'D_int',
                            'range' : (20, -1., 1.),
@@ -412,15 +510,4 @@ variables['Phi_1'] = { 'name'  : 'phi1',
                        'fold'  : 3}
 
 
-
 '''
-variables['mth_fit'] = {      'name'  : 'mth',                                                                                                                                                       
-                              'range' : ([ 40., 51., 64., 78., 100., 125.],),
-                              'xaxis' : 'm_{T}^{H} [GeV]',
-                              'fold'  : 3}
-
-variables['mjj_fit'] = {      'name'  : 'mjj',
-                              'range' : ([200., 400., 630.76923077, 907.6921, 1284.61538462, 1646.15384615, 4000.],),
-                              'xaxis' : 'm_{jj} [GeV]',
-                              'fold'  : 3}
-
