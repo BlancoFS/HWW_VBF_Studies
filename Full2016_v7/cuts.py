@@ -1,13 +1,12 @@
-#VBF cuts                                                                                                                                                                                               
+#VBF cuts                                                                                                                                                                           
 
-
-#-------------------------------------------------------------------------------                                                                                                                           
-# supercut                                                                                                                                                                                                 
-#-------------------------------------------------------------------------------                                                                                                                           
+#-------------------------------------------------------------------------------                                                                                                    
+# supercut                                                                                                                                                                          
+#-------------------------------------------------------------------------------                                                                                                    
 _tmp = [
      'Lepton_pdgId[0]*Lepton_pdgId[1] == -11*13',
      'Lepton_pt[0] > 25.',
-     'Lepton_pt[1] > 13.',
+     'Lepton_pt[1] > 15.',
      '(abs(Lepton_pdgId[1]) == 13 || Lepton_pt[1] > 13.)',
      '(nLepton >= 2 && Alt$(Lepton_pt[2], 0) < 10.)'
      ]
@@ -19,57 +18,98 @@ def addcut(name, exprs):
     cuts[name] = ' && '.join(exprs)
 
 
-#-------------------------------------------------------------------------------                                                                                                                           
-# VBF                                                                                                                                                                                                      
-#-------------------------------------------------------------------------------                                                                                                                           
+#-------------------------------------------------------------------------------                                                                                                                                                             
+# VBF REGION                                                                                                                                                                                                                                 
+#-------------------------------------------------------------------------------                                                                                                                                                             
 _tmp = [
-     'Alt$(CleanJet_pt[1], 0) > 30.',
-     'abs(CleanJet_eta[0]) < 4.7',
-     'abs(CleanJet_eta[1]) < 4.7',
-     'mth > 40 && mth < 125',
-     'drll < 2.5',
-     'mjj > 400',
-     'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.2217) == 0',
-     'Sum$(CleanJet_pt>30) >= 2 && Sum$(CleanJet_pt>30) <= 3',
-     'abs(jetdis) > 1.2',
-     'mll < 70',
-     'abs(CleanJet_eta[0]) > 1.5 && abs(CleanJet_eta[1]) > 1.5',
-     'abs(Lepton_eta[0]) < 1.5 && abs(Lepton_eta[1]) < 1.5',
-     'log((abs(2*Lepton_eta[0]-CleanJet_eta[0]-CleanJet_eta[1])+abs(2*Lepton_eta[1]-CleanJet_eta[0]-CleanJet_eta[1]))/detajj) < 1.',
-     '(CleanJet_pt[0] + CleanJet_pt[1]) > 62.5',
-     'Lepton_pt[0] + Lepton_pt[1] + CleanJet_pt[0] + CleanJet_pt[1] + MET_pt > 137.5',
-     'mlljj > 500'
-     ]
+    'Alt$(CleanJet_pt[1], 0) > 30.',
+    'abs(CleanJet_eta[0]) < 4.5',
+    'abs(CleanJet_eta[1]) < 4.5',
+    'Sum$(CleanJet_pt>30) >= 2',
+    'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.0614) == 0',
+    'mth > 60 && mth < 150',
+    'PuppiMET_pt > 10',
+    'mll > 12',
+    'D_VBF_QCD > 0.1'
+]
 
 addcut('VBF', _tmp)
 
-#-------------------------------------------------------------------------------                                                                                                                           
-# VBF_Bkg DY                                                                                                                                                                                               
-#-------------------------------------------------------------------------------                                                                                                                           
+#---------
+# GGH
+#----------
+
+_tmp = [
+    'Alt$(CleanJet_pt[1], 0) > 30.',
+    'abs(CleanJet_eta[0]) < 4.5',
+    'abs(CleanJet_eta[1]) < 4.5',
+    'Sum$(CleanJet_pt>30) >= 2',
+    'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.0614) == 0',
+    'mth > 60 && mth < 150',
+    'PuppiMET_pt > 10',
+    'mll > 12',
+    'D_VBF_QCD < 0.1'
+]
+
+addcut('GGH', _tmp)
+
+
+#-------------------------------------------------------------------------------                                                                                                                                                            
+# VBF_Bkg DY                                                                                                                                                                                                                                
+#-------------------------------------------------------------------------------                                                                                                                                                             
 _tmp = [
      'Alt$(CleanJet_pt[1], 0) > 30.',
      'abs(CleanJet_eta[0]) < 4.5',
      'abs(CleanJet_eta[1]) < 4.5',
      'mth < 40',
      'Sum$(CleanJet_pt>20) >= 2',
-     'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.2217) == 0',
-     'detall < 1.6',
-     'mll < 80'
+     'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.0614) == 0',
+     'mll < 80',
      ]
 
 addcut('DY', _tmp)
 
 
-#-------------------------------------------------------------------------------                                                                                                                           
-# VBF_Bkg top                                                                                                                                                                                              
-#-------------------------------------------------------------------------------                                                                                                                           
+#-------------------------------------------------------------------------------                                                                                                                                                             
+# VBF_Bkg top                                                                                                                                                                                                                                
+#-------------------------------------------------------------------------------                                                                                                                                                             
 _tmp = [
      'Alt$(CleanJet_pt[1], 0) > 30.',
      'abs(CleanJet_eta[0]) < 4.5',
      'abs(CleanJet_eta[1]) < 4.5',
-     'Sum$(CleanJet_pt>30) >= 1',
-     'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.2217) >= 1',
+     'Sum$(CleanJet_pt>30) >= 2',
+     'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.0614) >= 1',
      'mll > 80'
      ]
 
 addcut('top', _tmp)
+
+'''
+_tmp = [
+     'Alt$(CleanJet_pt[1], 0) > 30.',
+     'abs(CleanJet_eta[0]) < 4.5',
+     'abs(CleanJet_eta[1]) < 4.5',
+     'Sum$(CleanJet_pt>30) >= 2',
+     'topcr'
+     ]
+
+addcut('top_cr', _tmp)
+'''
+
+
+#-------------------------------------------------------------------------------                                                                                                                           
+# WW                                                                                                                                                                                                       
+#-------------------------------------------------------------------------------                                                                                                                           
+_tmp = [
+     'abs(CleanJet_eta[0]) < 4.7',
+     'abs(CleanJet_eta[1]) < 4.7',
+     'Sum$(CleanJet_pt>30) == 2',
+     'bVeto',
+     'mpmet > 20',
+     'PuppiMET_pt > 20',
+     'mll > 20',
+     'ptll > 30',
+     'BDTG4D3 < 0.15'
+]
+
+addcut('WW', _tmp)
