@@ -45,49 +45,31 @@ for k in cuts:
 #nuisances['lumi'] = {
 #    'name': 'lumi_13TeV_2018',
 #    'type': 'lnN',
-#    'samples': dict((skey, '1.023') for skey in mc if skey not in ['WW', 'top', 'DY'])
+#    'samples': dict((skey, '1.025') for skey in mc if skey not in ['WW', 'top', 'DY'])
 #}
 
 nuisances['lumi_Uncorrelated'] = {
     'name': 'lumi_13TeV_2018',
     'type': 'lnN',
-    'samples': dict((skey, '1.02')  for skey in mc if skey not in ['WW', 'top'] )
+    'samples': dict((skey, '1.015') for skey in mc if skey not in ['WW', 'top'])
 }
 
 nuisances['lumi_XYFact'] = {
     'name': 'lumi_13TeV_XYFact',
     'type': 'lnN',
-    'samples': dict((skey, '1.008') for skey in mc if skey not in ['WW', 'top'])
+    'samples': dict((skey, '1.02') for skey in mc if skey not in ['WW', 'top'])
 }
 
 nuisances['lumi_LScale'] = {
     'name': 'lumi_13TeV_LSCale',
     'type': 'lnN',
-    'samples': dict((skey, '1.003') for skey in mc if skey not in ['WW', 'top'])
-}
-
-nuisances['lumi_BBDefl'] = {
-    'name': 'lumi_13TeV_BBDefl',
-    'type': 'lnN',
-    'samples': dict((skey, '1.004') for skey in mc if skey not in ['WW', 'top'])
-}
-
-nuisances['lumi_DynBeta'] = {
-    'name': 'lumi_13TeV_DynBeta',
-    'type': 'lnN',
-    'samples': dict((skey, '1.005') for skey in mc if skey not in ['WW', 'top'])
+    'samples': dict((skey, '1.002') for skey in mc if skey not in ['WW', 'top'])
 }
 
 nuisances['lumi_CurrCalib'] = {
     'name': 'lumi_13TeV_CurrCalib',
     'type': 'lnN',
-    'samples': dict((skey, '1.003') for skey in mc if skey not in ['WW', 'top'])
-}
-
-nuisances['lumi_Ghosts'] = {
-    'name': 'lumi_13TeV_Ghosts',
-    'type': 'lnN',
-    'samples': dict((skey, '1.001') for skey in mc if skey not in ['WW', 'top'])
+    'samples': dict((skey, '1.002') for skey in mc if skey not in ['WW', 'top'])
 }
 
 #### FAKES
@@ -146,12 +128,12 @@ nuisances['fake_mu_stat'] = {
     }
 }
 
+
 ##### B-tagger
-#hf
-for shift in ['jes', 'lf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
+for shift in ['jes', 'lf','hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
     btag_syst = ['(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift]
 
-    name = 'CMS_btag_%s' % shift
+    name = 'CMS_btag_DeepFlav_%s' % shift
     if 'stats' in shift:
         name += '_2018'
 
@@ -162,6 +144,8 @@ for shift in ['jes', 'lf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cfer
         'samples': dict((skey, btag_syst) for skey in mc),
     }
 
+
+
 ##### Trigger Efficiency
 
 trig_syst = ['((TriggerEffWeight_2l_u)/(TriggerEffWeight_2l))*(TriggerEffWeight_2l>0.02) + (TriggerEffWeight_2l<=0.02)', '(TriggerEffWeight_2l_d)/(TriggerEffWeight_2l)']
@@ -171,15 +155,6 @@ nuisances['trigg'] = {
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, trig_syst) for skey in mc_emb),
-}
-
-prefire_syst = ['PrefireWeight_Up/PrefireWeight', 'PrefireWeight_Down/PrefireWeight']
-
-nuisances['prefire'] = {
-    'name': 'CMS_eff_prefiring_2018',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, prefire_syst) for skey in mc),
 }
 
 ##### Electron Efficiency and energy scale
@@ -252,8 +227,10 @@ if useEmbeddedDY:
 
 ##### Jet energy scale
 jes_systs = ['JESAbsolute','JESAbsolute_2018','JESBBEC1','JESBBEC1_2018','JESEC2','JESEC2_2018','JESFlavorQCD','JESHF','JESHF_2018','JESRelativeBal','JESRelativeSample_2018']
+#jes_systs = ['JESRelativeSample_2018']
 folderup = ""
 folderdo = ""
+
 
 for js in jes_systs:
   if 'Absolute' in js: 
@@ -281,11 +258,13 @@ for js in jes_systs:
       'type': 'shape',
       'mapUp': js+'up',
       'mapDown': js+'do',
-      'samples': dict((skey, ['1', '1']) for skey in mc),
+      'samples': dict((skey, ['1', '1']) for skey in mc if skey not in ['VZ', 'Vg', 'VgS']),
       'folderUp': folderup,
       'folderDown': folderdo,
       'AsLnN': '1'
   }
+
+
 
 ##### Jet energy resolution
 nuisances['JER'] = {
@@ -294,13 +273,11 @@ nuisances['JER'] = {
     'type': 'shape',
     'mapUp': 'JERup',
     'mapDown': 'JERdo',
-    'samples': dict((skey, ['1', '1']) for skey in mc),
+    'samples': dict((skey, ['1', '1']) for skey in mc if skey not in ['VZ', 'Vg', 'VgS']),
     'folderUp': makeMCDirectory('JERup_suffix'),
     'folderDown': makeMCDirectory('JERdo_suffix'),
     'AsLnN': '1'
 }
-
-
 
 
 ##### MET energy scale
@@ -347,8 +324,6 @@ nuisances['PU'] = {
     'AsLnN': '1',
 }
 
-
-
 ### PU ID SF uncertainty
 puid_syst = ['Jet_PUIDSF_up/Jet_PUIDSF', 'Jet_PUIDSF_down/Jet_PUIDSF']
 
@@ -358,7 +333,6 @@ nuisances['jetPUID'] = {
     'type': 'shape',
     'samples': dict((skey, puid_syst) for skey in mc)
 }
-
 
 ##### PS
 
@@ -406,7 +380,7 @@ nuisances['UE']  = {
                 'name'  : 'UE_CP5',
                 'skipCMS' : 1,
                 'type': 'lnN',
-                'samples': dict((skey, '1.015') for skey in mc if not skey in ['WW','top']), 
+                'samples': dict((skey, '1.015') for skey in mc), 
 }
 
 
@@ -555,7 +529,6 @@ topvars2j = []
 
 topScaleNormFactors2j = {'LHEScaleWeight[3]': 1.0236911155246506, 'LHEScaleWeight[0]': 1.1249360990045656, 'LHEScaleWeight[1]': 1.1054771659922622, 'LHEScaleWeight[Length$(LHEScaleWeight)-1]': 0.8819750427294990, 'LHEScaleWeight[Length$(LHEScaleWeight)-4]': 0.9819208264038879, 'LHEScaleWeight[Length$(LHEScaleWeight)-2]': 0.9025818187649589}
 
-
 for var in variations:
   topvars2j.append(var+'/'+str(topScaleNormFactors2j[var]))
   
@@ -564,7 +537,6 @@ nuisances['QCDscale_top_2j']  = {
     'skipCMS' : 1,
     'kind'  : 'weight_envelope',
     'type'  : 'shape',
-    'cutspost' : lambda self, cuts: [cut for cut in cuts if '2j' in cut],
     'samples'  : {
        'top' : topvars2j,
     }
@@ -650,7 +622,18 @@ nuisances['CRSR_accept_top']  = {
                 ]               
               }
 
-
+'''                                                                                                                                                                                                        
+nuisances['CRSR_accept_ggH']  = {                                                                                                                                                                          
+               'name'  : 'CMS_hww_CRSR_accept_ggH',                                                                                                                                                        
+               'type'  : 'lnN',                                                                                                                                                                            
+               'samples'  : {                                                                                                                                                                              
+                   'ggH_hww' : '1.02',                                                                                                                                                                     
+                   },                                                                                                                                                                                      
+               'cuts'  : [                                                                                                                                                                                 
+                   'ggF',                                                                                                                                                                                  
+                ]                                                                                                                                                                                          
+               }                                                                                                                                                                                           
+'''
 
 # Theory uncertainty for ggH
 #
@@ -808,14 +791,22 @@ nuisances['stat'] = {
 }
 
 
-nuisances['DYembnorm2j']  = {
-                 'name'  : 'CMS_hww_DYttnorm2j',
-                 'samples'  : {
-                     'Dyemb' : '1.00',
-                     },
-                 'type'  : 'rateParam',
-                }
-
+if useEmbeddedDY:
+    nuisances['DYembnorm2j']  = {
+        'name'  : 'CMS_hww_DYttnorm2j',
+        'samples'  : {
+            'Dyemb' : '1.00',
+        },
+        'type'  : 'rateParam'
+    }
+else:
+    nuisances['DYttnorm2j']  = {
+        'name'  : 'CMS_hww_DYttnorm2j',
+        'samples'  : {
+            'DY' : '1.00',
+        },
+        'type'  : 'rateParam'
+    }
 
 nuisances['Topnorm2j']  = {
                'name'  : 'CMS_hww_Topnorm2j',
@@ -825,6 +816,21 @@ nuisances['Topnorm2j']  = {
                'type'  : 'rateParam',
               }
 
+nuisances['ggHnorm']  = {
+    'name'  : 'CMS_hww_ggHnorm2j',
+    'samples'  : {
+        'ggH_hww' : '1.00',
+        },
+    'type'  : 'rateParam'
+    }
+
+nuisances['WW2jnorm']  = {
+    'name'  : 'CMS_hww_WWnorm2j',
+    'samples'  : {
+        'WW' : '1.00',
+        },
+    'type'  : 'rateParam'
+    }
 
 for n in nuisances.values():
     n['skipCMS'] = 1
