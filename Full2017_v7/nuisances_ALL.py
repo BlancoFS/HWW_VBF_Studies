@@ -27,7 +27,17 @@ except NameError:
 from LatinoAnalysis.Tools.HiggsXSection import HiggsXSection
 HiggsXS = HiggsXSection()
 
-
+'''
+cuts0j = []
+cuts1j = []
+cuts2j = []
+for k in cuts:
+  for cat in cuts[k]['categories']:
+    if '0j' in cat: cuts0j.append(k+'_'+cat)
+    elif '1j' in cat: cuts1j.append(k+'_'+cat)
+    elif '2j' in cat: cuts2j.append(k+'_'+cat)
+    else: print 'WARNING: name of category does not contain on either 0j,1j,2j'
+'''
 ################################ EXPERIMENTAL UNCERTAINTIES  #################################
 
 #### Luminosity
@@ -141,7 +151,7 @@ nuisances['fake_mu_stat'] = {
 for shift in ['jes', 'lf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
     btag_syst = ['(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift]
 
-    name = 'CMS_btag_%s' % shift
+    name = 'CMS_btag_DeepFlav_%s' % shift
     if 'stats' in shift:
         name += '_2017'
 
@@ -656,7 +666,6 @@ nuisances['CRSR_accept_top']  = {
               }
 
 
-
 # Theory uncertainty for ggH
 #
 #
@@ -821,10 +830,35 @@ nuisances['DYembnorm2j']  = {
                  'type'  : 'rateParam',
                 }
 
+
 nuisances['Topnorm2j']  = {
                'name'  : 'CMS_hww_Topnorm2j',
                'samples'  : {
                    'top' : '1.00',
+                   },
+               'type'  : 'rateParam',
+              }
+
+nuisances['ggHnorm']  = {
+    'name'  : 'CMS_hww_ggHnorm2j',
+    'samples'  : {
+        'ggH_hww' : '1.00',
+        },
+    'type'  : 'rateParam'
+    }
+
+nuisances['WWnorm2j']  = {
+               'name'  : 'CMS_hww_WWnorm2j',
+               'samples'  : {
+                   'WW' : '1.00',
+                   },
+               'type'  : 'rateParam',
+              }
+
+nuisances['ggWWnorm2j']  = {
+               'name'  : 'CMS_hww_WWnorm2j',
+               'samples'  : {
+                   'ggWW' : '1.00',
                    },
                'type'  : 'rateParam',
               }

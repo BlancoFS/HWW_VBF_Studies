@@ -91,38 +91,26 @@ aliases['Top_pTrw'] = {
 }
 
 aliases['nCleanGenJet'] = {
-    'linesToAdd': ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_4/src/PlotsConfigurations/Configurations/Differential/ngenjet.cc+'],
+    'linesToAdd': ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/Differential/ngenjet.cc+'],
     'class': 'CountGenJet',
     'samples': mc
 }
 
-# No jet with pt > 30 GeV
-aliases['zeroJet'] = {
-    'expr': 'Alt$(CleanJet_pt[0], 0) < 30.'
-}
-
-aliases['oneJet'] = {
-    'expr': 'Alt$(CleanJet_pt[0], 0) > 30.'
-}
-
-aliases['multiJet'] = {
-    'expr': 'Alt$(CleanJet_pt[1], 0) > 30.'
-}
-
-aliases['multiLepton'] = {
-    'expr': 'Alt$(Lepton_pt[1], 0) > 30.'
-}
 
 aliases['mlljj'] = {
-    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_4/src/PlotsConfigurations/Configurations/WW/Full2016_v6/extended/mlljj.cc+' ],
+    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/mlljj.cc+' ],
     'class' : 'mlljj'
 }
 
 aliases['mjjj'] = {
-    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_4/src/PlotsConfigurations/Configurations/WW/Full2016_v6/extended/mjjj.cc+' ],
+    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/mjjj.cc+' ],
     'class' : 'mjjj'
 }
 
+aliases['jetdis'] = {
+    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/GetJetDis.cc+'],
+    'class' : 'GetJetDis'
+}
 
 
 ##### DY Z pT reweighting
@@ -163,26 +151,31 @@ aliases['multiJet'] = {
 
 if btag_algo=="deepcsv":
     aliases['bVeto'] = {
-        'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 4.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.1522) == 0'
+        'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.1522) == 0'
     }
     
     aliases['bReq'] = {
-        'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 4.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.1522) >= 1'
+        'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.1522) >= 1'
     }
   
 elif btag_algo=="deepflav":
     aliases['bVeto'] = {
-        'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 4.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] >  0.0521) == 0'
+        'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] >  0.0521) == 0'
     }
     
     aliases['bReq'] = {
-        'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 4.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] >  0.0521) >= 1'
+        'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] >  0.0521) >= 1'
     }
 
 
 aliases['topcr'] = {
-    'expr': 'mll>80 && ((zeroJet && !bVeto) || bReq)'
+    'expr': 'mtw2>30 && mll>50 && ((zeroJet && !bVeto) || bReq)'
 }
+
+#aliases['topcr'] = {
+#    'expr': 'mpmet>20 && PuppiMET_pt>20 && mll>20 && ptll>30 && ((zeroJet && !bVeto) || bReq)'
+#}
+
 
 # B tag scale factors
 if btag_algo=="deepcsv":
@@ -221,14 +214,14 @@ if btag_algo=="deepcsv":
         }
 
 elif btag_algo=="deepflav":
-    btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepFlavour_94XSF_V4_B_F.csv' % os.getenv('CMSSW_BASE')
+    btagSFSource = '/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PhysicsTools/NanoAODTools/data/btagSF/DeepFlavour_94XSF_V4_B_F.csv'
     
     aliases['Jet_btagSF_deepflav_shape'] = {
         'linesToAdd': [
             'gSystem->Load("libCondFormatsBTauObjects.so");',
             'gSystem->Load("libCondToolsBTau.so");',
             'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
-            '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_4/src/PlotsConfigurations/Configurations/patches/btagsfpatch.cc+' 
+            '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/patches/btagsfpatch.cc+'
         ],
         'class': 'BtagSF',
         'args': (btagSFSource,'central','deepjet'),
@@ -280,6 +273,7 @@ elif btag_algo=="deepflav":
             'samples': mc
         }
 
+
 aliases['Jet_PUIDSF'] = { 
   'expr' : 'TMath::Exp(Sum$((Jet_jetId>=2)*TMath::Log(Jet_PUIDSF_loose)))',
   'samples': mc
@@ -327,11 +321,12 @@ aliases['SFweightMuDown'] = {
 }
 
 aliases['Weight2MINLO'] = {
-    'linesToAdd': ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_4/src/PlotsConfigurations/Configurations/Differential/weight2MINLO.cc+'],
+    'linesToAdd': ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/Differential/weight2MINLO.cc+'],
     'class': 'Weight2MINLO',
     'args': '%s/src/LatinoAnalysis/Gardener/python/data/powheg2minlo/NNLOPS_reweight.root' % os.getenv('CMSSW_BASE'),
     'samples' : [skey for skey in samples if 'ggH_hww' in skey],
 }
+
 
 ## GGHUncertaintyProducer wasn't run for GluGluHToWWTo2L2Nu_Powheg_M125 
 thus = [
@@ -348,45 +343,39 @@ thus = [
 
 for thu in thus:
     aliases[thu+'_2'] = {
-        'linesToAdd': ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_4/src/PlotsConfigurations/Configurations/Differential/gghuncertainty.cc+'],
+        'linesToAdd': ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/Differential/gghuncertainty.cc+'],
         'class': 'GGHUncertainty',
         'args': (thu,),
         'samples': ['ggH_hww']
     }
-    
-    
-    
-####                                                                                                                                                                                                                                          
-#### JHUGen MELA                                                                                                                                                                                                                              
-####                                                                                                                                                                                                                                          
 
-mes = ['RecoLevel_me_VBF_hsm', 'RecoLevel_me_QCD_hsm', 'RecoLevel_me_VH_hsm', 'Q2V1', 'Q2V2', 'costheta1', 'costheta2', 'costhetastar', 'phi', 'phi1']
+
+#### MELA FRAMEWORK #####                                                                                                                                                                                                                    
+
 mes_reduced = ['RecoLevel_me_VBF_hsm', 'RecoLevel_me_QCD_hsm']
 
 for me in mes_reduced:
     aliases[me]={
     'linesToAdd': [
-    #'gSystem->Load("%s/src/ZZMatrixElement/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),                                                                                                     
-    #'gSystem->Load("libZZMatrixElementMELA.so","", kTRUE);',                                                                                                                                                                                 
-    'gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-    'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-    '.L %s/patches/RecoLevelME_patch.cc+' % configurations],
+        'gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
+        'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
+        '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/patches/RecoLevelME_patch.cc+'],
     'class': 'RecoLevelME',
     'args': (me,)
     }
 
 
 
-aliases['D_VBF_QCD']     = { 'expr': '(RecoLevel_me_VBF_hsm**2)/(RecoLevel_me_VBF_hsm**2 + RecoLevel_me_QCD_hsm**2)' } #MELA VBF/ggF discriminant from paper                                                                                  
+aliases['D_VBF_QCD']     = { 'expr': '(RecoLevel_me_VBF_hsm**2)/(RecoLevel_me_VBF_hsm**2 + RecoLevel_me_QCD_hsm**2)' }
 #aliases['D_VBF_VH']     = { 'expr': '(RecoLevel_me_VBF_hsm**2)/(RecoLevel_me_VBF_hsm**2 + 1e16 * (RecoLevel_me_VH_hsm**2))' }
 #aliases['D_VH_QCD']     = { 'expr': '(RecoLevel_me_VH_hsm**2)/(RecoLevel_me_VH_hsm**2 + 1e-16 * (RecoLevel_me_QCD_hsm**2))' }
 
-
-###                                                                                                                                                                                                                                           
-###                                                                                                                                                                                                                                           
-### MATRIX ELEMENT METHOD WITH MoMEMta                                                                                                                                                                                                        
-###                                                                                                                                                                                                                                           
-###                                                                                                                                                                                                                                           
+'''
+###                                                                                                                                                                                                                                          
+###                                                                                                                                                                                                                                          
+### MATRIX ELEMENT METHOD WITH MoMEMta                                                                                                                                                                                                       
+###                                                                                                                                                                                                                                          
+###                                                                                                                                                                                                                                          
 
 
 aliases['VBF_ME']={
@@ -395,7 +384,7 @@ aliases['VBF_ME']={
         'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so.1","", kTRUE);',
         'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
         'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libLHAPDF.so", "", kTRUE);',
-        '.L %s/patches/RecoME_MoMEMta.cc+' % configurations],
+        '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/patches/RecoME_MoMEMta.cc+'],
     'class': 'RecoME',
     'args': 'VBF'
 }
@@ -406,19 +395,15 @@ aliases['DY_ME']={
         'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so.1","", kTRUE);',
         'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
         'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libLHAPDF.so", "", kTRUE);',
-        '.L %s/patches/RecoME_MoMEMta.cc+' % configurations],
+        '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/patches/RecoME_MoMEMta.cc+'],
     'class': 'RecoME',
     'args': 'DY'
 }
 
 aliases['D_DY']     = { 'expr': '150 * abs(VBF_ME)/(150 * abs(VBF_ME) + abs(DY_ME))' }
+'''
 
-####                                                                                                                                                                                                                                          
-####                                                                                                                                                                                                                                          
-#### BDT SHAPE                                                                                                                                                                                                                                
-####                                                                                                                                                                                                                                          
-####                                                                                                                                                                                                                                          
-
+########                                                                                                                                                                                                                                     
 
 aliases['BDTG4D3'] = {
     'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
