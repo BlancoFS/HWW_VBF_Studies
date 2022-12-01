@@ -6,6 +6,24 @@
 #                          'fold'  : 3,                        # 0 = not fold (default), 1 = fold underflow bin, 2 = fold overflow bin, 3 = fold underflow and overflow
 #                          'linesToAdd' : ['.L /afs/cern.ch/user/p/piedra/work/VH2jBDT/VH2j_TMVAReader.C+']}
 
+
+
+variables['BDT_VBF'] = { 'name'  : 'BDTG4D3',
+                         'range' : (20, -1., 1.),
+                         'xaxis' : 'BDT VBF',
+                         'fold'  : 3}
+
+variables['BDT_VBF_fine'] = { 'name'  : 'BDTG4D3',
+                              'range' : ([-1., -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1.0],),
+                              'xaxis' : 'BDT VBF',
+                              'fold'  : 3}
+
+variables['BDT_VBF_2'] = { 'name'  : 'BDTG4D3',
+                           'range' : ([-1., -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.925, 1.0],),
+                           'xaxis' : 'BDT VBF',
+                           'fold'  : 3}
+
+
 #
 # Centrality
 #
