@@ -855,13 +855,7 @@ nuisances['WWnorm2j']  = {
                'type'  : 'rateParam',
               }
 
-nuisances['ggWWnorm2j']  = {
-               'name'  : 'CMS_hww_WWnorm2j',
-               'samples'  : {
-                   'ggWW' : '1.00',
-                   },
-               'type'  : 'rateParam',
-              }
+
 
 
 for n in nuisances.values():
