@@ -363,26 +363,6 @@ aliases['mjjj'] = {
     'class' : 'mjjj'
 }
 
-aliases['jetdis'] = {
-    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/GetJetDis.cc+'],
-    'class' : 'GetJetDis'
-}
-
-aliases['alpha1'] = {
-    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/alpha1.cc+'],
-    'class' : 'alpha1'
-}
-
-aliases['alpha2'] = {
-    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/alpha2.cc+'],
-    'class' : 'alpha2'
-}
-
-aliases['alpha3'] = {
-    'linesToAdd' : ['.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/extended/alpha3.cc+'],
-    'class' : 'alpha3'
-}
-
 
 
 ####
@@ -449,83 +429,6 @@ aliases['DY_ME']={
 }
 
 aliases['D_DY']     = { 'expr': '150 * abs(VBF_ME)/(150 * abs(VBF_ME) + abs(DY_ME))' }
-
-
-
-
-
-'''
-###                                                                                                                                                                                                                                          
-###                                                                                                                                                                                                                                          
-### BINARY DNN                                                                                                                                                                                       
-###                                                                                                                                                                                                                                          
-###                                                                                                                                                                                                                                          
-
-
-aliases['dnn'] = {
-    'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-                   'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-                   'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
-                   '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/DNN/evaluate_multiclass_keras_5_single.cc+'],
-    'class': 'evaluate_multiclass_5_S',
-    'args': 0,
-}
-
-
-###
-###
-### CATEGORICAL DNN (5 REGIONS: VBF, GGH, TOP, WW, DY)
-###
-###
-
-
-aliases['dnn_vbf'] = {
-    'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-                   'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-                   'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
-                   '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/DNN/evaluate_multiclass_keras_5_quad.cc+'],
-    'class': 'evaluate_multiclass_5',
-    'args': 0,
-}
-
-
-aliases['dnn_ggh'] = {
-    'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-                   'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-                   'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
-                   '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/DNN/evaluate_multiclass_keras_5_quad.cc+'],
-    'class': 'evaluate_multiclass_5',
-    'args': 1,
-}
-
-
-aliases['dnn_top'] = {
-    'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-                   'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-                   'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
-                   '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/DNN/evaluate_multiclass_keras_5_quad.cc+'],
-    'class': 'evaluate_multiclass_5',
-    'args': 2,
-}
-
-aliases['dnn_ww'] = {
-    'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-                   'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-                   'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
-                   '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/DNN/evaluate_multiclass_keras_5_quad.cc+'],
-    'class': 'evaluate_multiclass_5',
-    'args': 3,
-}
-
-aliases['dnn_dy'] = {
-    'linesToAdd': ['gSystem->Load("%s/src/JHUGenMELA/MELA/data/%s/libmcfm_707.so","", kTRUE);'%(os.getenv('CMSSW_BASE'), os.getenv('SCRAM_ARCH')),
-                   'gSystem->Load("libJHUGenMELAMELA.so","", kTRUE);',
-                   'gSystem->Load("/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/lib/libmomemta.so","", kTRUE);',
-                   '.L /afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/src/PlotsConfigurations/Configurations/WW/Full2016_v7/DNN/evaluate_multiclass_keras_5_quad.cc+'],
-    'class': 'evaluate_multiclass_5',
-    'args': 4,
-}
-'''
 
 
 ####
