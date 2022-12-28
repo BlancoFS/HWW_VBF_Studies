@@ -1,44 +1,29 @@
 -- Load the library containing the matrix element
-load_modules('/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/WW_leptonic_ME/build/libme_WW_leptonic_ME.so')
+load_modules('/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/WW_leptonic_ME/build/libme_WW_leptonic_ME.so') -- path to your build folder
 
-local lepton1 = declare_input("lepton1")
+local lepton1 = declare_input("lepton1") -- Declare input particles, be awere of the Id of your leptons in the .cc file. They must agree.
 local lepton2 = declare_input("lepton2")
 local jet1 = declare_input("jet1")
 local jet2 = declare_input("jet2")
 
+-- Do not touch 
 parameters = {
     energy = 13000.,
     top_mass = 173.,
     top_width = 1.491500,
     W_mass = 80.419002,
     W_width = 2.047600,
-
-    export_graph_as = "WW_leptonic_ME_computing_graph.dot"
 }
 
+-- Do not touch at first
 cuba = {
-    relative_accuracy = 0.05,
-    verbosity = 3,
-    max_eval = 5000,
+    relative_accuracy = 0.02,
+    verbosity = 0,
+    max_eval = 50000,
     n_start = 500,
-    algorithm = "divonne"
+    -- algorithm = "divonne"
 }
 
-GaussianTransferFunctionOnEnergy.tf_p1 = {
-    ps_point = add_dimension(),
-    reco_particle = lepton1.reco_p4,
-    sigma = 0.05,
-}
-
-lepton1.set_gen_p4("tf_p1::output");
-
-GaussianTransferFunctionOnEnergy.tf_p2 = {
-    ps_point = add_dimension(),
-    reco_particle = lepton2.reco_p4,
-    sigma = 0.05,
-}
-
-lepton2.set_gen_p4("tf_p2::output");
 
 BreitWignerGenerator.flatter_s13 = {
     ps_point = add_dimension(),
@@ -71,7 +56,7 @@ Looper.looper = {
 -- Start of loop over solutions
 --
 
-    full_inputs = { 'looper::particles/1', lepton1.reco_p4, 'looper::particles/2', lepton2.reco_p4, jet1.reco_p4, jet2.reco_p4}
+    full_inputs = { lepton1.reco_p4, 'looper::particles/1',  lepton2.reco_p4, 'looper::particles/2'} -- keep order
     
     BuildInitialState.initial_state = {
         particles = full_inputs,
@@ -84,13 +69,14 @@ Looper.looper = {
       pdf = 'CT10nlo',
       pdf_scale = parameter('W_mass'),
 
-      matrix_element = 'WW_leptonic_ME_sm_P1_Sigma_sm_gg_epvemumvmxuux',
+      matrix_element = 'WW_leptonic_ME_sm_P1_Sigma_sm_gg_epvemumvmxuux',  -- Change name from your PROCESS/Subprocess folder. Name in the last part of .cc file
       matrix_element_parameters = {
-          card = '/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/WW_leptonic_ME/Cards/param_card.dat'
+          card = '/afs/cern.ch/work/s/sblancof/public/CMSSW_10_6_10/WW_leptonic_ME/Cards/param_card.dat' -- Change path to your Cards path
       },
 
       initialState = 'initial_state::partons',
 
+      -- Order must agree the .cc file and full_inputs !!!!
       particles = {
         inputs = full_inputs,
         ids = {
@@ -109,14 +95,6 @@ Looper.looper = {
           {
             pdg_id = -12,
             me_index = 4,
-          },
-          {
-            pdg_id = 1,
-            me_index = 5,
-          },
-          {
-            pdg_id = -1,
-            me_index = 6,
           },
         }
       },
