@@ -53,12 +53,6 @@ export _condor_SCHEDD_HOST="bigbird02.cern.ch"
 
 ## Run code:
 
-It should be done a Run.sh script to submit jobs in Slurm, the old way is for condor.
-
-
-```
-sbatch -o logfile.log -e errofile.err --qos=gridui_sort --partition=cloudcms Run.sh
-```
 
 Run and make plots with LatinoAnalysis tools:
 
@@ -68,9 +62,6 @@ mkShapesMulti.py --pycfg=configuration.py --doBatch=1 --batchSplit=Samples,Files
 mkShapesMulti.py --pycfg=configuration.py --doHadd=1 --batchSplit=Samples,Files --doNotCleanup --nThreads=8
 
 mkPlot.py --pycfg=configuration.py --inputFile=rootFile/plots_WW_2016.root --minLogC=0.01 --minLogCratio=0.01 --maxLogC=1000 --maxLogCratio=1000 --showIntegralLegend=1
-
-Plot_Sig_Bkg.py --pycfg=configuration.py --inputFile=rootFile/plots_WW_2016.root
-
 ```
 
 ## Useful tools
